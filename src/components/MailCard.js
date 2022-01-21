@@ -20,7 +20,7 @@ const MailCard = ({ mail, user }) => {
     } else setWasSeen(true);
 
     setLoading(false);
-  }, [mail, user]);
+  }, [mail, user, dispatch]);
 
   const setMailActive = (mail) => {
     dispatch(activeMail(mail));

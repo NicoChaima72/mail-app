@@ -1,5 +1,4 @@
 import { db } from "../firebase/firebaseConfig";
-import {} from "../reducers/mailReducer";
 import { types } from "../types/types";
 import { loadMails } from "../utils/loadMails";
 
@@ -71,7 +70,7 @@ export const startUpdateWasSeenMail = (user, mail) => {
 
     const update = { [wasSeen]: true };
 
-    const doc = await db.collection(`/mails`).doc(mail.id).update(update);
+    await db.collection(`/mails`).doc(mail.id).update(update);
     mail.mail.options.wasSeen[
       mail.user.email === user.email ? "sender" : "receiver"
     ] = true;
