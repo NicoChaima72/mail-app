@@ -2,13 +2,21 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 
+console.log({
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+});
 const firebaseConfig = {
-  apiKey: "AIzaSyBKuXPDlbijMTWfiSLkxpjN-GQPjacHOMo",
-  authDomain: "mailapp-3b4fe.firebaseapp.com",
-  projectId: "mailapp-3b4fe",
-  storageBucket: "mailapp-3b4fe.appspot.com",
-  messagingSenderId: "1057560374267",
-  appId: "1:1057560374267:web:2b8bad87efdca31750395e",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 firebase.initializeApp(firebaseConfig);

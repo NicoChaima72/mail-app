@@ -3,7 +3,6 @@ import Nav from "./Nav";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { startSaveMail } from "../../actions/mails";
-import firebase from "firebase";
 import { closeSendMessage } from "../../actions/ui";
 
 const SendMail = () => {
@@ -20,8 +19,11 @@ const SendMail = () => {
 
   const { to, subject, message } = formValues;
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
+
+    let currentDate = await fetch("http://worldclockapi.com/api/json/utc/now");
+    currentDate = await currentDate.json();
 
     dispatch(
       startSaveMail({
@@ -35,13 +37,13 @@ const SendMail = () => {
           to,
           subject,
           message,
-          date: firebase.firestore.FieldValue.serverTimestamp(),
+          date: new Date(currentDate.currentDateTime),
+          options: {
+            wasSeen: { sender: true, receiver: false },
+            lastUpdated: new Date(currentDate.currentDateTime),
+            thereAreAnswers: false,
+          },
         },
-        lastDates: {
-          sender: firebase.firestore.FieldValue.serverTimestamp(),
-          receiver: null,
-        },
-        aswers: {},
       })
     );
 
@@ -69,6 +71,7 @@ const SendMail = () => {
               value={to}
               onChange={handleInputChange}
               required
+              autoFocus={true}
             />
           </div>
           <div className="mb-3">
@@ -82,6 +85,8 @@ const SendMail = () => {
               value={subject}
               onChange={handleInputChange}
               required
+              autoComplete="nope"
+              maxLength={60}
             />
           </div>
           <div className="mb-3">
@@ -98,11 +103,11 @@ const SendMail = () => {
             ></textarea>
           </div>
           {!loadingSendMail ? (
-            <button className="w-full bg-sky-500 hover:bg-sky-400 rounded text-white p-2 ">
+            <button className="w-full bg-gradient-to-r from-sky-600 to-sky-400  hover:from-sky-700 hover:to-sky-500 text-white p-2 ">
               Send
             </button>
           ) : (
-            <button className="w-full bg-green-500 rounded text-white p-2 ">
+            <button className="w-full bg-gradient-to-r from-green-600 to-green-400 rounded text-white p-2 ">
               Sent
             </button>
           )}

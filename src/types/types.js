@@ -11,9 +11,15 @@ export const types = {
   mailAddNew: "[Mail] New mail",
   mailActive: "[Mail] Set active mail",
   mailLoad: "[Mail] Load mails",
-  mailToogleFavourite: "[Mail] Toggle favourite mail",
+  mailFavourite: "[Mail] Favourite mail",
+  mailUpdate: "[Mail] Update",
   mailDelete: "[Mail] Delete mail",
+  mailWasSeen: "[Mail] Was Seen email",
   mailLogoutCleaning: "[Mail] Logout cleaning",
+
+  answerAddNew: "[Answer] New answer",
+  answerLoad: "[Answer] Load answers",
+  answerClean: "[Answer] Clean answers",
 
   login: "[Auth] Login",
   logout: "[Auth] Logout",

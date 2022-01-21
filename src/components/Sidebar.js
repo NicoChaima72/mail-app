@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import Button from "./Button";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import InboxIcon from "@mui/icons-material/Inbox";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
-import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import CachedIcon from "@mui/icons-material/Cached";
+
 import VideocamOutlinedIcon from "@mui/icons-material/VideocamOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
@@ -13,8 +11,12 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { closeSidebar, showSendMessage } from "../actions/ui";
 
+import SidebarRedirects from "./SidebarRedirects";
+import { startLoadingMails } from "../actions/mails";
+
 const Sidebar = () => {
   const { sidebarOpen } = useSelector((state) => state.ui);
+  const { email, uid } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,26 +34,33 @@ const Sidebar = () => {
     dispatch(showSendMessage());
   };
 
+  const handleRefresh = () => {
+    dispatch(startLoadingMails(uid, email, window.location.pathname));
+    dispatch(closeSidebar());
+  };
+
   return (
     <>
       <nav
         className="absolute lg:static w-80 h-screen overflow-y-auto px-4 md:px-8 py-5 ease-in-out duration-75 z-50 bg-white"
         style={{ left: `${sidebarOpen ? "0px" : "-320px"}`, minWidth: "16rem" }}
       >
-        <h2 className="text-2xl mb-4">MailApp</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl">MailApp</h2>
+          <div className="cursor-pointer" onClick={handleRefresh}>
+            <CachedIcon></CachedIcon>
+          </div>
+        </div>
         <Button
           Icon={AddBoxIcon}
           title="New message"
-          styles="bg-sky-500 hover:bg-sky-400 text-white"
+          styles="bg-gradient-to-r from-sky-600 to-sky-400  hover:from-sky-700 hover:to-sky-500 text-white"
           isCustomColor={true}
           onClick={handleOpenSendMessage}
         ></Button>
         <div className="divide-y mt-4">
           <div className="space-y-1 pb-3">
-            <Button Icon={InboxIcon} title="Inbox"></Button>
-            <Button Icon={StarBorderIcon} title="Favourites"></Button>
-            <Button Icon={SendOutlinedIcon} title="Sent"></Button>
-            <Button Icon={DeleteOutlineIcon} title="Trash"></Button>
+            <SidebarRedirects></SidebarRedirects>
           </div>
           <div className="space-y-1 py-3">
             <h4 className="text-gray-500 text-sm mb-1">MEETS</h4>

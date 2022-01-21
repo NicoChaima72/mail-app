@@ -13,8 +13,25 @@ export const mailReducer = (state = initialState, action) => {
     case types.mailAddNew:
       return { ...state, mails: [action.payload, ...state.mails] };
 
+    case types.mailAddAnswer:
+      return {
+        ...state,
+        mailActive: {
+          ...state.mailActive,
+          answers: [action.payload, ...state.mailActive.answers],
+        },
+      };
+
     case types.mailLoad:
       return { ...state, mails: [...action.payload] };
+
+    case types.mailUpdate:
+      return {
+        ...state,
+        mails: state.mails.map((mail) =>
+          mail.id === action.payload.id ? action.payload.mail : mail
+        ),
+      };
 
     case types.mailDelete:
       return {
@@ -24,9 +41,26 @@ export const mailReducer = (state = initialState, action) => {
       };
 
     case types.mailLogoutCleaning:
-      return { ...state, active: null, mails: [] };
+      return { ...state, mailActive: null, mails: [] };
 
-    // TODO: Agregar favourite
+    case types.mailFavourite:
+      return {
+        ...state,
+        mailActive: {
+          ...action.payload.mail,
+        },
+        mails: state.mails.map((mail) =>
+          mail.id === action.payload.mail.id ? action.payload.mail : mail
+        ),
+      };
+    case types.mailWasSeen:
+      console.log(action.payload);
+      return {
+        ...state,
+        mails: state.mails.map((mail) =>
+          mail.id === action.payload.mail.id ? action.payload : mail
+        ),
+      };
 
     default:
       return state;

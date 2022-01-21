@@ -8,6 +8,7 @@ import { login } from "../actions/auth";
 import { PublicRoute } from "./PublicRouter";
 import { PrivateRoute } from "./PrivateRouter";
 import { startLoadingMails } from "../actions/mails";
+import { CircularProgress } from "@mui/material";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
@@ -18,14 +19,26 @@ const AppRouter = () => {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user?.uid) {
         dispatch(login(user));
+        dispatch(
+          startLoadingMails(user.uid, user.email, window.location.pathname)
+        );
         setIsLoggedIn(true);
-        dispatch(startLoadingMails(user.email));
       } else setIsLoggedIn(false);
       setChecking(false);
     });
   }, [dispatch, setChecking, setIsLoggedIn]);
 
-  if (checking) return <h1>Cargando</h1>;
+  if (checking)
+    return (
+      <div className="bg-white w-screen h-screen flex items-center justify-center">
+        <div className="">
+          <h1 className="text-3xl text-center">MailApp</h1>
+          <div className="text-center mx-auto mt-2">
+            <CircularProgress color="primary" size={30}></CircularProgress>
+          </div>
+        </div>
+      </div>
+    );
 
   return (
     <BrowserRouter>
@@ -37,7 +50,6 @@ const AppRouter = () => {
       ></PublicRoute>
 
       <PrivateRoute
-        exact
         path="/"
         component={MailRouter}
         isAuthenticated={isLoggedIn}

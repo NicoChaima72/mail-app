@@ -1,5 +1,6 @@
 import { Avatar } from "@mui/material";
 import React from "react";
+import moment from "moment";
 
 const Message = ({ mail, user }) => {
   return (
@@ -7,16 +8,23 @@ const Message = ({ mail, user }) => {
       <Avatar src={user.photoURL} sx={{ width: 48, height: 48 }}></Avatar>
       <div className="text-sm w-full">
         <div className="flex justify-between">
-          <h5 className="font-semibold">
+          <h5 className="font-semibold leading-4">
             {`${user.name} `}
-            <span className="font-thin text-xs">&lt;{user.email}&gt;</span>
+            <span className="font-light text-xs">&lt;{user.email}&gt;</span>
           </h5>
-          <span className="text-gray-400 text-sm">1 hour ago</span>
+          <span className="text-gray-400 text-xs">
+            {mail.date instanceof Date
+              ? moment(mail.date).format("DD/MM/YY HH:mm")
+              : moment(mail.date.toDate()).format("DD/MM/YY HH:mm")}
+          </span>
         </div>
         {mail.subject && (
-          <h2 className="font-bold text-3xl mt-3 mb-4">{mail.subject}</h2>
+          <div className="">
+            <p className="text-xs text-gray-400">To: {mail.to}</p>
+            <h2 className="font-bold text-3xl mt-2">{mail.subject}</h2>
+          </div>
         )}
-        <p>{mail.message}</p>
+        <p className="mt-2">{mail.message}</p>
       </div>
     </div>
   );
