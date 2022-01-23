@@ -54,7 +54,6 @@ export const mailReducer = (state = initialState, action) => {
         ),
       };
     case types.mailWasSeen:
-      console.log(action.payload);
       return {
         ...state,
         mails: state.mails.map((mail) =>

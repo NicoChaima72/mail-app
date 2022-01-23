@@ -11,8 +11,6 @@ export const startAddAnswer = (user, mail, answer) => {
       mail.user.email === answer.user.email ? "receiver" : "sender"
     }`;
 
-    console.log(wasSeen);
-
     const update = {};
     update[wasSeen] = false;
     update["mail.options.lastUpdated"] = new Date(currentDate.currentDateTime);
