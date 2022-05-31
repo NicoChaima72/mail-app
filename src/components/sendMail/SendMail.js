@@ -22,9 +22,6 @@ const SendMail = () => {
   const handleSendMessage = async (e) => {
     e.preventDefault();
 
-    let currentDate = await fetch("http://worldclockapi.com/api/json/utc/now");
-    currentDate = await currentDate.json();
-
     dispatch(
       startSaveMail({
         user: {
@@ -37,10 +34,10 @@ const SendMail = () => {
           to,
           subject,
           message,
-          date: new Date(currentDate.currentDateTime),
+          date: new Date(),
           options: {
             wasSeen: { sender: true, receiver: false },
-            lastUpdated: new Date(currentDate.currentDateTime),
+            lastUpdated: new Date(),
             thereAreAnswers: false,
           },
         },

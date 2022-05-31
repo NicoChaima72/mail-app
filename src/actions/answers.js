@@ -4,16 +4,13 @@ import { loadAnswers } from "../utils/loadAnswers";
 
 export const startAddAnswer = (user, mail, answer) => {
   return async (dispatch) => {
-    let currentDate = await fetch("http://worldclockapi.com/api/json/utc/now");
-    currentDate = await currentDate.json();
-
     const wasSeen = `mail.options.wasSeen.${
       mail.user.email === answer.user.email ? "receiver" : "sender"
     }`;
 
     const update = {};
     update[wasSeen] = false;
-    update["mail.options.lastUpdated"] = new Date(currentDate.currentDateTime);
+    update["mail.options.lastUpdated"] = new Date();
     update["mail.options.lastAnswer.user.uid"] = user.uid;
     update["mail.options.lastAnswer.user.name"] = user.displayName;
     update["mail.options.lastAnswer.answer"] = answer.answer.message;
