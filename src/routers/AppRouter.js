@@ -4,10 +4,10 @@ import LoginScreen from "../pages/LoginScreen";
 import MailRouter from "./MailRouter";
 import { firebase } from "../firebase/firebaseConfig";
 import { useDispatch } from "react-redux";
-import { login } from "../actions/auth";
+import { login } from "../features/auth/authSlice";
+import { fetchMails } from "../features/mail/mailSlice";
 import { PublicRoute } from "./PublicRouter";
 import { PrivateRoute } from "./PrivateRouter";
-import { startLoadingMails } from "../actions/mails";
 import { CircularProgress } from "@mui/material";
 
 const AppRouter = () => {
@@ -20,7 +20,10 @@ const AppRouter = () => {
       if (user?.uid) {
         dispatch(login(user));
         dispatch(
-          startLoadingMails(user.uid, user.email, window.location.pathname)
+          fetchMails({
+            user: { uid: user.uid, email: user.email },
+            path: window.location.pathname,
+          })
         );
         setIsLoggedIn(true);
       } else setIsLoggedIn(false);

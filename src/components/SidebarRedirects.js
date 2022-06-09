@@ -7,15 +7,15 @@ import { NavLink } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { closeSidebar } from "../actions/ui";
-import { startLoadingMails } from "../actions/mails";
+import { fetchMails } from "../features/mail/mailSlice";
 
 const NavLinkButton = ({ path, Icon, title }) => {
   const dispatch = useDispatch();
-  const { email, uid } = useSelector((state) => state.auth);
+  const { email, uid } = useSelector((state) => state.auth.user);
 
   const handleRedirect = (path) => {
     dispatch(closeSidebar());
-    dispatch(startLoadingMails(uid, email, path));
+    fetchMails({ user: { uid, email }, path });
   };
 
   return (

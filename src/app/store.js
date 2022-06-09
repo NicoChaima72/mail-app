@@ -1,7 +1,10 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-
-import { ui, mail, auth, answer } from "../reducers";
+import authReducer from "../features/auth/authSlice";
+import mailReducer from "../features/mail/mailSlice";
+import answerReducer from "../features/answer/answerSlice";
+// import { ui, answer, auth, mail } from "../reducers";
+import { ui } from "../reducers";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -10,9 +13,11 @@ const composeEnhancers =
 
 const reducers = combineReducers({
   ui,
-  mail,
-  auth,
-  answer,
+  // mail,
+  mail: mailReducer,
+  // auth,
+  auth: authReducer,
+  answer: answerReducer,
 });
 
 export const store = createStore(

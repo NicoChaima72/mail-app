@@ -1,33 +1,65 @@
 import React, { useEffect, useState } from "react";
 import Nav from "./Nav";
+import { CircularProgress } from "@mui/material";
 
 import Footer from "./Footer";
 import Message from "./Message";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateWasSeenMail } from "../../features/mail/mailSlice";
+import {
+  startFetchAnswers,
+  cleanAnswers,
+} from "../../features/answer/answerSlice";
+// import { cleanAnswers } from "../../actions/answers";
 
 const Mail = () => {
+  const dispatch = useDispatch();
   const { mailActive } = useSelector((state) => state.mail);
-  const { uid } = useSelector((state) => state.auth);
-  const { answers } = useSelector((state) => state.answer);
+  const user = useSelector((state) => state.auth.user);
+  const answer = useSelector((state) => state.answer);
 
   const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
-    setIsDeleted(mailActive.erased?.[uid] || false);
-  }, [mailActive.erased, uid]);
+    setIsDeleted(mailActive.erased?.[user.uid] || false);
+
+    if (mailActive.mail.options.thereAreAnswers)
+      dispatch(startFetchAnswers(mailActive.id));
+
+    return () => {
+      dispatch(cleanAnswers());
+    };
+  }, [dispatch, mailActive.id, mailActive.erased, mailActive.mail, user]);
+
+  useEffect(() => {
+    const senderOrReceiver =
+      mailActive.user.email === user.email ? "sender" : "receiver";
+
+    if (!mailActive.mail.options.wasSeen[senderOrReceiver]) {
+      dispatch(updateWasSeenMail({ user, mail: mailActive }));
+    }
+  }, [mailActive, user, dispatch]);
 
   return (
     <div className="h-screen flex flex-col p-4">
       <Nav isDeleted={isDeleted}></Nav>
       <div className="overflow-y-auto flex flex-col grow my-4 space-y-3 divide-y pr-2 pb-14">
-        {answers.map((answer) => (
-          <Message
-            key={answer.id}
-            mail={answer.answer}
-            user={answer.user}
-          ></Message>
-        ))}
         <Message mail={mailActive.mail} user={mailActive.user}></Message>
+        {answer.loading ? (
+          <div className="text-center pt-10">
+            <CircularProgress color="primary" size={20}></CircularProgress>
+          </div>
+        ) : (
+          [...answer.answers]
+            .reverse()
+            .map((answer) => (
+              <Message
+                key={answer.id}
+                mail={answer.answer}
+                user={answer.user}
+              ></Message>
+            ))
+        )}
       </div>
       {!isDeleted && <Footer></Footer>}
     </div>

@@ -1,14 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { startGoogleLogin } from "../actions/auth";
+// import { startGoogleLogin } from "../actions/auth";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { googleLogin } from "../features/auth/authSlice";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
 
   const handleGoogleLogin = (e) => {
     e.preventDefault();
-    dispatch(startGoogleLogin());
+    // dispatch(startGoogleLogin());
+    dispatch(googleLogin());
   };
 
   return (

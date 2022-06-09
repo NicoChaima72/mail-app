@@ -10,15 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   activeMail,
   addNewMail,
-  startDeleteMail,
-  startFavouriteMail,
-} from "../../actions/mails";
-import { cleanAnswers } from "../../actions/answers";
+  deleteMail,
+  favouriteMail,
+} from "../../features/mail/mailSlice";
+import { cleanAnswers } from "../../features/answer/answerSlice";
 
 const Nav = ({ isDeleted }) => {
   const dispatch = useDispatch();
   const { mailActive } = useSelector((state) => state.mail);
-  const { uid } = useSelector((state) => state.auth);
+  const { uid } = useSelector((state) => state.auth.user);
 
   const [isFavourite, setIsFavourite] = useState(false);
 
@@ -33,26 +33,31 @@ const Nav = ({ isDeleted }) => {
 
   const handleDelete = () => {
     if (window.confirm("Delete mail?")) {
-      dispatch(startDeleteMail(uid, mailActive.id));
-      dispatch(activeMail(null));
+      dispatch(deleteMail({ userId: uid, mailId: mailActive.id }));
     }
   };
 
   const handleRestore = () => {
     if (window.confirm("Restore mail?")) {
-      dispatch(startDeleteMail(uid, mailActive.id, false));
+      dispatch(
+        deleteMail({
+          userId: uid,
+          mailId: mailActive.id,
+          isDeleted: false,
+        })
+      );
       dispatch(activeMail(null));
     }
   };
 
   const handleFavourite = () => {
     dispatch(
-      startFavouriteMail(
-        mailActive,
-        uid,
-        window.location.pathname,
-        !isFavourite
-      )
+      favouriteMail({
+        mail: mailActive,
+        userId: uid,
+        path: window.location.pathname,
+        isFavourite: !isFavourite,
+      })
     );
 
     if (window.location.pathname === "/favourites" && !isFavourite === true) {

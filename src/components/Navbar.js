@@ -3,8 +3,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../actions/ui";
 import { Avatar } from "@mui/material";
-import { startLogout } from "../actions/auth";
 import { useHistory } from "react-router-dom";
+import { logout } from "../features/auth/authSlice";
 
 const Navbar = ({
   search,
@@ -13,7 +13,7 @@ const Navbar = ({
   setIsSearched,
 }) => {
   const dispatch = useDispatch();
-  const { photoURL } = useSelector((state) => state.auth);
+  const { photoURL } = useSelector((state) => state.auth.user);
   const { mails } = useSelector((state) => state.mail);
   const history = useHistory();
 
@@ -24,9 +24,13 @@ const Navbar = ({
   }, []);
 
   useEffect(() => {
-    history.listen((location, action) => {
+    const unlisten = history.listen((location, action) => {
       setPathname(location.pathname.replace("/", ""));
     });
+
+    return () => {
+      unlisten();
+    };
   }, [history]);
 
   useEffect(() => {
@@ -46,7 +50,7 @@ const Navbar = ({
   }, [search, mails, setIsSearched, setSearchMails]);
 
   const handleLogout = () => {
-    if (window.confirm("Logout?")) dispatch(startLogout());
+    if (window.confirm("Logout?")) dispatch(logout());
   };
 
   return (

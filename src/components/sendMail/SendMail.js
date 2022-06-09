@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import Nav from "./Nav";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
-import { startSaveMail } from "../../actions/mails";
+import { saveMail } from "../../features/mail/mailSlice";
 import { closeSendMessage } from "../../actions/ui";
 
 const SendMail = () => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth.user);
 
-  const [loadingSendMail, setLoadingSendMail] = useState(false);
+  const [loadingSendMail, setLoadingSendMail] = useState(-1); //-1 default | 0 enviando | 1 enviado
 
   const [formValues, handleInputChange, reset] = useForm({
     to: "",
@@ -21,35 +21,38 @@ const SendMail = () => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
+    setLoadingSendMail(0);
 
-    dispatch(
-      startSaveMail({
-        user: {
-          id: auth.uid,
-          name: auth.displayName,
-          email: auth.email,
-          photoURL: auth.photoURL || "",
+    const sendMail = {
+      user: {
+        id: user.uid,
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL || "",
+      },
+      mail: {
+        to,
+        subject,
+        message,
+        date: new Date(),
+        options: {
+          wasSeen: { sender: true, receiver: false },
+          lastUpdated: new Date(),
+          thereAreAnswers: false,
         },
-        mail: {
-          to,
-          subject,
-          message,
-          date: new Date(),
-          options: {
-            wasSeen: { sender: true, receiver: false },
-            lastUpdated: new Date(),
-            thereAreAnswers: false,
-          },
-        },
-      })
+      },
+    };
+
+    await dispatch(
+      saveMail({ mail: sendMail, path: window.location.pathname })
     );
 
-    setLoadingSendMail(true);
+    setLoadingSendMail(1);
 
     setTimeout(() => {
       reset();
       dispatch(closeSendMessage());
-    }, 1000);
+    }, 300);
   };
 
   return (
@@ -99,12 +102,18 @@ const SendMail = () => {
               required
             ></textarea>
           </div>
-          {!loadingSendMail ? (
+          {loadingSendMail === -1 && (
             <button className="w-full bg-gradient-to-r from-sky-600 to-sky-400  hover:from-sky-700 hover:to-sky-500 text-white p-2 ">
               Send
             </button>
-          ) : (
-            <button className="w-full bg-gradient-to-r from-green-600 to-green-400 rounded text-white p-2 ">
+          )}
+          {loadingSendMail === 0 && (
+            <button className="w-full bg-gradient-to-r from-sky-500 to-sky-300 rounded text-white p-2 cursor-wait">
+              Sending...
+            </button>
+          )}
+          {loadingSendMail === 1 && (
+            <button className="w-full bg-gradient-to-r from-green-600 to-green-400 rounded text-white p-2 cursor-wait">
               Sent
             </button>
           )}

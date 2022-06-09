@@ -11,12 +11,12 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { closeSidebar, showSendMessage } from "../actions/ui";
 
+import { fetchMails } from "../features/mail/mailSlice";
 import SidebarRedirects from "./SidebarRedirects";
-import { startLoadingMails } from "../actions/mails";
 
 const Sidebar = () => {
   const { sidebarOpen } = useSelector((state) => state.ui);
-  const { email, uid } = useSelector((state) => state.auth);
+  const { email, uid } = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,7 +35,12 @@ const Sidebar = () => {
   };
 
   const handleRefresh = () => {
-    dispatch(startLoadingMails(uid, email, window.location.pathname));
+    dispatch(
+      fetchMails({
+        user: { uid, email },
+        path: window.location.pathname,
+      })
+    );
     dispatch(closeSidebar());
   };
 

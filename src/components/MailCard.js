@@ -1,8 +1,7 @@
 import { Avatar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { startLoadingAnswers } from "../actions/answers";
-import { activeMail, startUpdateWasSeenMail } from "../actions/mails";
+import { activeMail } from "../features/mail/mailSlice";
 import { getTimeString } from "../utils/getTimeString";
 
 const MailCard = ({ mail, user }) => {
@@ -16,7 +15,6 @@ const MailCard = ({ mail, user }) => {
       (user.email !== mail.user.email && !mail.mail.options.wasSeen.receiver)
     ) {
       setWasSeen(false);
-      dispatch(startUpdateWasSeenMail(user, mail));
     } else setWasSeen(true);
 
     setLoading(false);
@@ -24,7 +22,6 @@ const MailCard = ({ mail, user }) => {
 
   const setMailActive = (mail) => {
     dispatch(activeMail(mail));
-    dispatch(startLoadingAnswers(mail.id));
 
     if (!wasSeen) {
       setWasSeen(true);

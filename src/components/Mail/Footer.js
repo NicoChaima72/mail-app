@@ -4,11 +4,11 @@ import Button from "../Button";
 import SendIcon from "@mui/icons-material/Send";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
-import { startAddAnswer } from "../../actions/answers";
+import { startAddAnswer } from "../../features/answer/answerSlice";
 
 const Footer = () => {
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth.user);
   const { mailActive } = useSelector((state) => state.mail);
 
   const [formValues, handleInputChange, reset] = useForm({
@@ -19,8 +19,6 @@ const Footer = () => {
 
   const handleSaveAnswer = async (e) => {
     e.preventDefault();
-    let currentDate = await fetch("http://worldclockapi.com/api/json/utc/now");
-    currentDate = await currentDate.json();
 
     const newAnswer = {
       user: {
@@ -31,11 +29,13 @@ const Footer = () => {
       },
       answer: {
         message: answer,
-        date: new Date(currentDate.currentDateTime),
+        date: new Date(),
       },
     };
 
-    dispatch(startAddAnswer(auth, mailActive, newAnswer));
+    dispatch(
+      startAddAnswer({ user: auth, mail: mailActive, answer: newAnswer })
+    );
 
     reset();
   };
@@ -43,15 +43,15 @@ const Footer = () => {
   return (
     <form onSubmit={handleSaveAnswer} className="flex space-x-3 w-full">
       <Avatar src={auth.photoURL}></Avatar>
-      <textarea
-        rows="1"
+      <input
         className="border w-full rounded p-2 focus:outline-none"
         placeholder="Message here"
         name="answer"
         value={answer}
         onChange={handleInputChange}
+        autoFocus={true}
         required
-      ></textarea>
+      ></input>
       <Button
         title="Send"
         Icon={SendIcon}
