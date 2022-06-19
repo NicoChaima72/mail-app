@@ -10,7 +10,7 @@ const initialState = {
 export const googleLogin = createAsyncThunk("auth/googleLogin", () => {
   return firebase
     .auth()
-    .signInWithPopup(googleAuthProvider)
+    .signInWithRedirect(googleAuthProvider)
     .then(({ user }) => user);
 });
 
