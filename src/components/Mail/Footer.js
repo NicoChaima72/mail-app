@@ -41,7 +41,10 @@ const Footer = () => {
   };
 
   return (
-    <form onSubmit={handleSaveAnswer} className="flex space-x-3 w-full">
+    <form
+      onSubmit={handleSaveAnswer}
+      className="flex space-x-3 w-full absolute bottom-0 inset-x-0 p-2 bg-white"
+    >
       <Avatar src={auth.photoURL}></Avatar>
       <input
         className="border w-full rounded p-2 focus:outline-none"
@@ -49,7 +52,6 @@ const Footer = () => {
         name="answer"
         value={answer}
         onChange={handleInputChange}
-        autoFocus={true}
         required
       ></input>
       <Button

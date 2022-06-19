@@ -21,7 +21,9 @@ const Message = ({ mail, user }) => {
         {mail.subject && (
           <div className="">
             <p className="text-xs text-gray-400">To: {mail.to}</p>
-            <h2 className="font-bold text-3xl mt-2">{mail.subject}</h2>
+            <h2 className="font-bold text-xl md:text-2xl mt-2">
+              {mail.subject}
+            </h2>
           </div>
         )}
         <p className="mt-2">{mail.message}</p>

@@ -33,7 +33,7 @@ const AppRouter = () => {
 
   if (checking)
     return (
-      <div className="bg-white w-screen h-screen flex items-center justify-center">
+      <div className="bg-white w-screen min-h-screen flex items-center justify-center">
         <div className="">
           <h1 className="text-3xl text-center">MailApp</h1>
           <div className="text-center mx-auto mt-2">

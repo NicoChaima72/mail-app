@@ -2,8 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from "../../firebase/firebaseConfig";
 import generateId from "generate-unique-id";
 import { loadAnswers } from "../../utils/loadAnswers";
-import produce from "immer";
-import { updateMail } from "../mail/mailSlice";
 
 const initialState = {
   loading: false,
@@ -23,12 +21,6 @@ export const startAddAnswer = createAsyncThunk(
   "answer/startAddAnswer",
   async ({ user, mail, answer }, thunkAPI) => {
     thunkAPI.dispatch(addAnswer({ ...answer, id: generateId() }));
-
-    const newMail = produce(mail, (draft) => {
-      draft.mail.options.thereAreAnswers = true;
-    });
-
-    thunkAPI.dispatch(updateMail({ mail: newMail }));
 
     const wasSeen = `mail.options.wasSeen.${
       mail.user.email === answer.user.email ? "receiver" : "sender"

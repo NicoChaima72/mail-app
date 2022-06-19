@@ -14,7 +14,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className=" w-screen h-screen grid grid-cols-12">
+    <div className=" w-screen h-full grid grid-cols-12">
       <div className="hidden lg:flex lg:col-span-6 w-full h-full flex-col p-5 bg-gradient-to-r from-sky-600 to-sky-300">
         {/* <h2 className="text-white text-4xl mt-7 mb-5 ml-10">
           The new Mail App
@@ -25,7 +25,7 @@ const LoginScreen = () => {
           className="w-9/12 mx-auto my-auto"
         />
       </div>
-      <div className="col-span-12 lg:col-span-6 border-l flex p-6 pt-10 md:p-32 flex-col w-full h-screen overflow-y-auto">
+      <div className="col-span-12 lg:col-span-6 border-l flex p-6 pt-10 md:p-32 flex-col w-full min-h-screen overflow-y-auto">
         <div className="">
           <h1 className="text-4xl font-medium">Mail App</h1>
           <div className="mt-10">

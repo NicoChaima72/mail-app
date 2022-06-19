@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Mail from "../components/Mail/Mail";
@@ -18,16 +18,21 @@ const MailRouter = () => {
   const [formValues, handleInputChange] = useForm({ search: "" });
   const { search } = formValues;
 
+  useLayoutEffect(() => {
+    const appContainer = document.getElementById("app-container");
+    appContainer.style.height = window.innerHeight + "px";
+  }, []);
+
   return (
-    <div className="app flex text-gray-700">
+    <div className="app flex text-gray-700 w-screen" id="app-container">
       <Sidebar></Sidebar>
-      <div className="app__body grid grid-cols-12 w-full">
+      <div className="app__body grid grid-rows-1 grid-cols-12 w-full h-full">
         <div
           className={`${
             !!mailActive
               ? "hidden md:block md:col-span-5"
               : "col-span-12 md:col-span-12"
-          } p-4 h-screen flex flex-col bg-gray-100`}
+          } p-4 h-full flex flex-col bg-gray-100`}
         >
           <Navbar
             search={search}
@@ -69,7 +74,7 @@ const MailRouter = () => {
           {sendMessageOpen && <SendMail></SendMail>}
         </div>
         {mailActive && (
-          <div className="col-span-12 md:col-span-7">
+          <div className="col-span-12 h-full md:col-span-7">
             <Mail></Mail>
           </div>
         )}

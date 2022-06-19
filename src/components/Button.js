@@ -11,7 +11,7 @@ const Button = ({ title, Icon, styles, isCustomColor, ...rest }) => {
       {...rest}
     >
       <Icon></Icon>
-      <p>{title}</p>
+      <span>{title}</span>
     </button>
   );
 };

@@ -21,6 +21,14 @@ const Mail = () => {
   const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
+    const containerMessages = document.getElementById("container-messages");
+    containerMessages.scrollTo({
+      top: containerMessages.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [answer.answers]);
+
+  useEffect(() => {
     setIsDeleted(mailActive.erased?.[user.uid] || false);
 
     if (mailActive.mail.options.thereAreAnswers)
@@ -41,9 +49,12 @@ const Mail = () => {
   }, [mailActive, user, dispatch]);
 
   return (
-    <div className="h-screen flex flex-col p-4">
+    <div className="h-full flex flex-col relative">
       <Nav isDeleted={isDeleted}></Nav>
-      <div className="overflow-y-auto flex flex-col grow my-4 space-y-3 divide-y pr-2 pb-14">
+      <div
+        id="container-messages"
+        className="overflow-y-auto flex flex-col grow my-4 space-y-3 divide-y pb-14 p-4"
+      >
         <Message mail={mailActive.mail} user={mailActive.user}></Message>
         {answer.loading ? (
           <div className="text-center pt-10">

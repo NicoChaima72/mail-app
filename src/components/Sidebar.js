@@ -47,7 +47,7 @@ const Sidebar = () => {
   return (
     <>
       <nav
-        className="absolute lg:static w-80 h-screen overflow-y-auto px-4 md:px-8 py-5 ease-in-out duration-75 z-50 bg-white"
+        className="absolute lg:static w-80 h-full overflow-y-auto px-4 md:px-8 py-5 ease-in-out duration-75 z-50 bg-white"
         style={{ left: `${sidebarOpen ? "0px" : "-320px"}`, minWidth: "16rem" }}
       >
         <div className="flex items-center justify-between mb-4">
@@ -81,7 +81,7 @@ const Sidebar = () => {
       </nav>
       {sidebarOpen && (
         <div
-          className="block lg:hidden w-screen h-screen bg-red-500 absolute z-40"
+          className="block lg:hidden w-screen h-full bg-red-500 absolute z-40"
           style={{ backgroundColor: "rgba(0,0,0,.3)" }}
           onClick={() => {
             dispatch(closeSidebar());
