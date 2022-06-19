@@ -21,6 +21,10 @@ const MailRouter = () => {
   useLayoutEffect(() => {
     const appContainer = document.getElementById("app-container");
     appContainer.style.height = window.innerHeight + "px";
+
+    window.addEventListener("resize", () => {
+      appContainer.style.height = window.innerHeight + "px";
+    });
   }, []);
 
   return (

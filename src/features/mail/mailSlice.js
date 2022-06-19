@@ -30,7 +30,7 @@ export const favouriteMail = createAsyncThunk(
   "mail/favouriteMail",
   async ({ mail, userId, path, isFavourite = true }, thunkAPI) => {
     const newMail = produce(mail, (draft) => {
-      draft.options.favourite[userId] = isFavourite;
+      draft["options"] = { favourite: { [userId]: isFavourite } };
     });
 
     if (path === "/favourites" && !isFavourite) {
@@ -41,7 +41,7 @@ export const favouriteMail = createAsyncThunk(
       thunkAPI.dispatch(addNewMail(newMail));
     } else {
       thunkAPI.dispatch(activeMail(newMail));
-      thunkAPI.dispatch(updateMail(newMail));
+      thunkAPI.dispatch(updateMail({ mail: newMail }));
     }
 
     await db
@@ -84,6 +84,7 @@ const mailSlice = createSlice({
   initialState,
   reducers: {
     updateMail: (state, action) => {
+      console.log({ payload: action.payload });
       state.mails = state.mails.map((mail) =>
         mail.id === action.payload.mail.id ? action.payload.mail : mail
       );

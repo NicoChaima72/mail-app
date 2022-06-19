@@ -43,7 +43,7 @@ const Footer = () => {
   return (
     <form
       onSubmit={handleSaveAnswer}
-      className="flex space-x-3 w-full fixed bottom-0 inset-x-0 p-2 bg-white"
+      className="flex space-x-3 w-full fixed md:absolute bottom-0 inset-x-0 p-2 bg-white"
     >
       <Avatar src={auth.photoURL}></Avatar>
       <input
