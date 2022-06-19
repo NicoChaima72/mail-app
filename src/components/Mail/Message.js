@@ -6,7 +6,7 @@ const Message = ({ mail, user }) => {
   return (
     <div className="flex space-x-3 py-4">
       <Avatar src={user.photoURL} sx={{ width: 48, height: 48 }}></Avatar>
-      <div className="text-sm w-full">
+      <div className="text-sm w-full mt-1">
         <div className="flex justify-between">
           <h5 className="font-semibold leading-4">
             {`${user.name} `}

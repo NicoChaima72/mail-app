@@ -66,7 +66,7 @@ const Nav = ({ isDeleted }) => {
   };
 
   return (
-    <div className="flex items-center justify-between p-4 pb-0">
+    <div className="flex items-center justify-between p-4 pb-2 shadow-sm">
       <div className="cursor-pointer" onClick={handleRemoveActiveMail}>
         <div className="hidden md:block">
           <CloseIcon className=""></CloseIcon>

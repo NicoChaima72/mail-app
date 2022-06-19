@@ -53,7 +53,7 @@ const Mail = () => {
       <Nav isDeleted={isDeleted}></Nav>
       <div
         id="container-messages"
-        className="overflow-y-auto flex flex-col grow my-4 space-y-3 divide-y pb-14 p-4"
+        className="overflow-y-auto flex flex-col grow space-y-3 divide-y pb-14 p-4 pt-0"
       >
         <Message mail={mailActive.mail} user={mailActive.user}></Message>
         {answer.loading ? (
