@@ -25,7 +25,7 @@ const LoginScreen = () => {
           className="w-9/12 mx-auto my-auto"
         />
       </div>
-      <div className="col-span-12 lg:col-span-6 border-l flex p-6 pt-10 md:p-32 flex-col w-full min-h-screen overflow-y-auto">
+      <div className="col-span-12 lg:col-span-6 border-l flex p-6 pt-10 md:p-16 xl:p-32 flex-col w-full min-h-screen overflow-y-auto">
         <div className="">
           <h1 className="text-4xl font-medium">Mail App</h1>
           <div className="mt-10">
