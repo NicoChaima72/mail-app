@@ -1,44 +1,27 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# MailApp
 
-## Available Scripts
+Messaging application that allows you to communicate with the people you want. It has session start with Google and many other features.
 
-In the project directory, you can run:
+## Technologies
 
-### `npm start`
+---
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React
+- Redux
+- Firebase (Firestore - Auth)
+- TailwindCSS
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Setup
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run this project, you must first create a _`/.env`_ file in the root of the project with the structure of _`.env.example`_
 
-### `npm run build`
+After that you just have to write on the console
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    $ npm install
+    $ npm start
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Preview
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Preview](https://lh3.googleusercontent.com/LwOdKEYavcCFFciPDC8ycFxSBmbvEB6iBjiKvF9AYgqCEIBXjNQS8RjzksMiL5TcX6B8ODj0TXzmdMzE49QybKgaKEgxHRE8GqsP4-E8L0zOV-4mE4YiD0mtOaaIoFkjkGV0zHgYT0opb9yPJx4TYQ0ws__b3stX_pqAawvuWfNYNa6Ml4juJOwztdKf1asycsmdK830f-mYlbnvCHebAS-vidhnor7rLUQPjHExFYYU1B2oTBPkhEzmty3CmVUfSWWwWH1IlF7RPiorqDdMJrRR0GYfOdAGw559Cv93K5S6GZ8ba5CRnF4rcedFEXhf7oKac9r7qyDTH5YLv09Ug7b0rRaHNcDgsqaB_wb3109OfgIya4_GOZRC4F0nPG1IYRPwB1S-v-iubg4s57PN8EqhpIoF5wgW7Sx95rwqF-dzmauI9A6fQ7f7rXfDaIHsRJo0-tH9EGvqx86FpgxCAVTaWAOjTRmoLtyzr6pGn_dDOf95cbWT4mwg_e_1SwngU8ZChjA90tJp3eqBmwY4vnM83JXuD2flT1qMX06aHs_oe9x0wmB_SkxTsrP1au9S8J_A0EMGUTguQPowaqfkjMebWH72SXw_bKXV6M1AwTwO9ZjUhYS3dnEJNDvvdd_j8kancasgdcE7d7vntNdSZpUqcU6Zhb9EL8PK4WzmmNSYAaPz5LE8nW2ftIyQ9gX0TlQqrwhQkIQPFL0HCDjA7IDgoooPO3tvC4fryobr1ylT7qUkVzO4r-sfOnFBS0xf60_kePmoGl1ggnfYQOi_47Wxa96V-JuwrgrYv0XmuInz9NWuFDsK9H-jxNr5NDbuZC9txNGzXA=w1672-h1148-no)
