@@ -74,13 +74,14 @@ export const loadMails = async (uid, email, path) => {
     // ////////////////////////////////////////////////////////////////////////
   } else mailSnap = [];
 
-  mails.sort((a, b) => {
+  mails = removeDuplicates(mails);
+  mails = mails.sort((a, b) => {
     if (path === "/inbox")
-      return b.mail.options.lastUpdated - a.mail.options.lastUpdated;
-
-    return b.mail.date - a.mail.date;
+      return (
+        b.mail.options.lastUpdated.seconds - a.mail.options.lastUpdated.seconds
+      );
+    else return b.mail.date.seconds - a.mail.date.seconds;
   });
 
-  mails = removeDuplicates(mails);
   return mails;
 };
